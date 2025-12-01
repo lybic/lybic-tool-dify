@@ -14,7 +14,7 @@ jobs:
       contents: write 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -49,7 +49,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Extract tag name
         id: extract_tag_publish
@@ -118,7 +118,7 @@ jobs:
             --clobber
 
       - name: Checkout target repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: ${{steps.get_basic_info.outputs.author}}/dify-plugins
           path: dify-plugins
