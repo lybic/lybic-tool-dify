@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 type: plugin
 author: lybic
 name: lybic-sandbox
@@ -29,15 +29,15 @@ plugins:
   tools:
     - provider/lybic-sandbox.yaml
 meta:
-  version: 0.0.2
+  version: 0.0.3
   arch:
     - amd64
     - arm64
   runner:
     language: python
-    version: "3.12"
+    version: 0.0.3
     entrypoint: main
-  minimum_dify_version: null
+  minimum_dify_version: 0.0.3
 created_at: 2025-08-25T19:35:41.32492557+08:00
 privacy: PRIVACY.md
 repo: https://github.com/lybic/dify_plugin
