@@ -5,11 +5,11 @@ from typing import Any
 from dify_plugin import Tool
 from dify_plugin.entities.tool import ToolInvokeMessage
 from dify_plugin.errors.tool import ToolProviderCredentialValidationError
-from lybic import LybicClient, Sandbox
+from lybic import LybicClient, Sandbox, LybicAuth
 
 
 async def get_screenshot(org_id: str, api_key: str, endpoint:str, sandbox_id: str) -> str:
-    async with LybicClient(org_id=org_id, api_key=api_key, endpoint=endpoint) as client:
+    async with LybicClient(LybicAuth(org_id=org_id, api_key=api_key, endpoint=endpoint)) as client:
         sandbox_client = Sandbox(client)
         screenshot_url, _, _ = await sandbox_client.get_screenshot(sandbox_id=sandbox_id)
         return screenshot_url

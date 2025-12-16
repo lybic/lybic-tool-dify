@@ -1,12 +1,12 @@
 import asyncio
-import logging
 from collections.abc import Generator
 from typing import Any
 
 from dify_plugin import Tool
 from dify_plugin.entities.tool import ToolInvokeMessage
 from dify_plugin.errors.tool import ToolProviderCredentialValidationError
-from lybic import LybicClient, ComputerUse
+from lybic import LybicClient, ComputerUse, LybicAuth, Sandbox
+
 
 def _run_async(coro, timeout: int = 60):
     try:
@@ -20,15 +20,15 @@ def _run_async(coro, timeout: int = 60):
     return asyncio.run(asyncio.wait_for(coro, timeout))
 
 async def execute_action(org_id: str, api_key: str, endpoint:str, sandbox_id: str, action: str, provider:str):
-    async with LybicClient(org_id=org_id, api_key=api_key, endpoint=endpoint) as client:
+    async with LybicClient(LybicAuth(org_id=org_id, api_key=api_key, endpoint=endpoint)) as client:
         computer_use = ComputerUse(client)
-
-        actions = await computer_use.parse_model_output(
-            model=provider,
-            textContent=action
+        sandbox = Sandbox(client)
+        actions = await computer_use.parse_llm_output(
+            model_type=provider,
+            llm_output=action
         )
         for a in actions.actions:
-            await computer_use.execute_computer_use_action(
+            await sandbox.execute_sandbox_action(
                 sandbox_id=sandbox_id,
                 action=a
             )
